@@ -398,6 +398,124 @@ function HomePage() {
           </Container>
         </Box>
 
+        {/* Contact Us Section */}
+        <Box sx={{
+          position: 'relative',
+          overflow: 'hidden',
+          background: 'url(/background.png) no-repeat center center / cover',
+        }} id="contact">
+          <Stack 
+            py={{ xs: 4, sm: 6, md: 8 }} 
+            px={{ xs: 2, sm: 4 }} 
+            alignItems="center" 
+            justifyContent='center' 
+            spacing={{ xs: 4, md: 5 }} 
+            direction={{ xs: 'column', md: 'row' }} 
+            width='100%'
+          >
+            <Box
+              component={motion.div}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              sx={{
+                textDecoration: 'none',
+                overflow: 'hidden',
+                maxWidth: '100%',
+                width: '1000px',
+                height: { xs: '300px', sm: '400px', md: '500px' }
+              }}
+            >
+              <Box
+                id="canvas-for-googlemap"
+                sx={{
+                  height: '100%',
+                  width: '100%',
+                  maxWidth: '100%'
+                }}
+              >
+                <iframe
+                  style={{
+                    height: '100%',
+                    width: '100%',
+                    border: 0
+                  }}
+                  frameBorder="0"
+                  src="https://www.google.com/maps/embed/v1/place?q=melbourne&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+                />
+              </Box>
+              <Box
+                sx={{
+                  '& img.text-marker': {
+                    maxWidth: 'none !important',
+                    background: 'none !important'
+                  },
+                  '& img': {
+                    maxWidth: 'none'
+                  }
+                }}
+              />
+            </Box>
+            <Stack 
+              component={motion.div}
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              height={{ xs: 'auto', md: 500 }}
+              maxWidth="600px" 
+              width="100%" 
+              spacing={3}
+              justifyContent='center'
+              p={{ xs: 3, sm: 4 }}
+              sx={{
+                position: 'relative',
+                backgroundColor: 'rgba(255,255,255,0.5)',
+                backdropFilter: 'blur(2px)'
+              }}
+            >
+              <Typography variant={isMobile ? 'h5' : 'h4'} textAlign="center">
+                Get in Touch with Our Duct Cleaning Experts Today!
+              </Typography>
+              
+              <Stack spacing={2}>
+                <Typography variant="body1">
+                  <strong>Address:</strong> 123 Main Street, Melbourne VIC 3000
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Phone:</strong> (03) 9123 4567
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Email:</strong> info@dustaway.com.au
+                </Typography>
+                <Typography variant="body1">
+                  <strong>Hours:</strong> Monday - Friday: 8am - 6pm
+                  <br />
+                  Saturday: 9am - 4pm
+                  <br />
+                  Sunday: Closed
+                </Typography>
+              </Stack>
+
+              <Button 
+                component={motion.a}
+                href="tel:0312345678"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                variant="contained" 
+                size={isMobile ? 'medium' : 'large'}
+                sx={{ 
+                  py: { xs: 1.5, sm: 2 },
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  textTransform: 'none',
+                  mt: 2
+                }}
+              >
+                Call Now
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+
         <Footer />
       </Stack>
     </ThemeProvider>
