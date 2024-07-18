@@ -35,6 +35,24 @@ const stats = [
   { value: '7+', label: 'Experienced Technicians', description: 'We have been in business for over 7 years and have cleaned air ducts in homes of all sizes. We know what it takes to get the job done right. Our technicians are highly trained and experienced in all aspects of air duct cleaning.' },
 ];
 
+const testimonials = [
+  {
+    name: 'John D.',
+    rating: 5,
+    comment: 'Excellent service! The team was professional and thorough.',
+  },
+  {
+    name: 'Sarah M.',
+    rating: 5,
+    comment: 'Very satisfied with the quality of work. Would highly recommend!',
+  },
+  {
+    name: 'Michael R.',
+    rating: 5,
+    comment: 'Great experience from start to finish. Will use again!',
+  },
+];
+
 const faqs = [
   {
     question: 'How often should I clean my air ducts?',
@@ -427,6 +445,60 @@ function HomePage() {
                 ))}
               </Stack>
             </Container>
+          </Stack>
+        </Box>
+
+        {/* Our Work/Testimonials Section */}
+        <Box sx={{
+          background: 'url(/background.png) no-repeat center center / cover',
+          width: '100%'
+        }}>
+          <Stack py={{ xs: 4, sm: 6, md: 8 }} px={{ xs: 2, sm: 4 }} alignItems="center">
+            <Typography 
+              component={motion.h3}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              variant={isMobile ? 'h4' : 'h3'}
+              mb={{ xs: 4, sm: 6 }}
+              textAlign="center"
+            >
+              Our Work
+            </Typography>
+            <Stack 
+              component={motion.div}
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true }}
+              direction={{ xs: 'column', md: 'row' }} 
+              spacing={4}
+              justifyContent="center"
+              width="100%"
+            >
+              {testimonials.map((testimonial, index) => (
+                <Stack 
+                  component={motion.div}
+                  variants={fadeInUp}
+                  whileHover={{ scale: 1.05 }}
+                  key={index}
+                  sx={{
+                    bgcolor: 'primary.50',
+                    p: { xs: 3, sm: 4 },
+                    borderRadius: 2,
+                    width: { xs: '100%', md: '30%' },
+                  }}
+                  spacing={2}
+                  alignItems='center'
+                >
+                  <Rating value={testimonial.rating} readOnly size={isMobile ? 'small' : 'medium'} />
+                  <Typography variant="body1">{testimonial.comment}</Typography>
+                  <Typography variant="subtitle2" color="primary.700">
+                    - {testimonial.name}
+                  </Typography>
+                </Stack>
+              ))}
+            </Stack>
           </Stack>
         </Box>
 
