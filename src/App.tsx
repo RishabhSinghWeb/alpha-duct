@@ -15,7 +15,8 @@ import {
   useMediaQuery,
   useTheme,
   Snackbar,
-  Alert
+  Alert,
+  CircularProgress,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Footer } from './components/Footer';
@@ -29,10 +30,10 @@ import { services } from './services';
 import { ReactCompareSlider, ReactCompareSliderImage } from 'react-compare-slider';
 
 const stats = [
-  { value: '24/7', label: 'Emergency Service', description: 'We understand that emergencies can happen at any time. That\'s why we offer emergency service for our air duct cleaning services. If you have an emergency, you can call us 24/7 and we will be there to help you.' },
-  { value: 'Free', label: 'Free Quotes', description: 'We offer free consultations for all of our services. This means that you can talk to us about your needs without any obligation. We\'ll answer any questions you have and help you choose the right solution for your budget and lifestyle.' },
-  { value: '100%', label: 'Satisfaction Guarantee', description: 'We are confident that you will be satisfied with our air duct cleaning services. However, if you are not, we want to make sure that you are completely happy with your experience. That\'s why we offer a 100% satisfaction guarantee.' },
-  { value: '7+', label: 'Experienced Technicians', description: 'We have been in business for over 7 years and have cleaned air ducts in homes of all sizes. We know what it takes to get the job done right. Our technicians are highly trained and experienced in all aspects of air duct cleaning.' },
+  { value: '24/7', label: 'Emergency Service', description: 'We recognize that unexpected situations can arise at any moment. That’s why we offer 24/7 emergency air duct cleaning services to ensure we’re available whenever you need us.' },
+  { value: 'Free', label: 'Free Quotes', description: 'We provide free consultations for all our services, allowing you to discuss your needs without any obligation. Our team is here to guide you in finding the ideal solution for your home and budget.' },
+  { value: '100%', label: 'Satisfaction Guarantee', description: 'We’re dedicated to ensuring your complete satisfaction with our air duct cleaning services. If you’re not entirely happy, we’ll work to make it right with our 100% satisfaction guarantee.' },
+  { value: '7+', label: 'Experienced Technicians', description: 'With over seven years of experience in air duct cleaning, our skilled technicians are trained to handle projects of all sizes and complexities, ensuring thorough and effective results for your home.' },
 ];
 
 const testimonials = [
@@ -122,9 +123,11 @@ function HomePage() {
     message: '',
     severity: 'success' as 'success' | 'error'
   });
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -154,6 +157,8 @@ function HomePage() {
         message: 'Failed to send message. Please try again.',
         severity: 'error'
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -199,7 +204,7 @@ function HomePage() {
                       fontSize: { xs: '0.9rem', sm: undefined },
                     }}
                   >
-                    Alpha Duct Cleanings
+                    Alpha Duct Cleaning
                   </Typography>
                   {/* <img src="/logo.png" height={100} /> */}
                   <Typography 
@@ -216,6 +221,51 @@ function HomePage() {
                   >
                     Fresh air, every breath
                   </Typography>
+                </Stack>
+
+                {/* Feature Cards */}
+                <Stack 
+                  direction={{ xs: 'column', sm: 'row' }} 
+                  spacing={2}
+                  sx={{ width: '100%' }}
+                  component={motion.div}
+                  variants={staggerContainer}
+                  initial="initial"
+                  animate="animate"
+                >
+                  {[
+                    { title: '24/7 Service', icon: '🕒', desc: 'Emergency support available' },
+                    { title: 'Licensed Experts', icon: '👨‍🔧', desc: 'Fully qualified technicians' },
+                    { title: 'Best Price', icon: '💰', desc: 'Competitive market rates' }
+                  ].map((item) => (
+                    <Stack
+                      key={item.title}
+                      component={motion.div}
+                      variants={fadeInUp}
+                      whileHover={{ scale: 1.05 }}
+                      sx={{
+                        bgcolor: 'rgba(255,255,255,0.1)',
+                        backdropFilter: 'blur(10px)',
+                        p: { xs: 2, sm: 3 },
+                        borderRadius: 2,
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        flex: 1,
+                        transition: 'transform 0.2s',
+                        '&:hover': {
+                          bgcolor: 'rgba(255,255,255,0.15)',
+                        }
+                      }}
+                      spacing={0.5}
+                    >
+                      <Typography fontSize={{ xs: '1.5rem', sm: '2rem' }}>{item.icon}</Typography>
+                      <Typography color="white" variant={isMobile ? 'subtitle1' : 'h6'} fontWeight={600}>
+                        {item.title}
+                      </Typography>
+                      <Typography color="grey.300" variant={isMobile ? 'body2' : 'body1'}>
+                        {item.desc}
+                      </Typography>
+                    </Stack>
+                  ))}
                 </Stack>
 
                 {/* CTA Button */}
@@ -287,7 +337,7 @@ function HomePage() {
                 px: { xs: 2, sm: 4 }
               }}
             >
-              Dust Away is your one-stop shop for all your air duct cleaning needs. We understand that your home is your sanctuary, and we take your air quality seriously. Our team of experienced technicians will clean your air ducts thoroughly and efficiently, leaving you with peace of mind knowing that your home is in good hands.
+              Alpha Duct Cleaning is your one-stop shop for all your air duct cleaning needs. We understand that your home is your sanctuary, and we take your air quality seriously. Our team of experienced technicians will clean your air ducts thoroughly and efficiently, leaving you with peace of mind knowing that your home is in good hands.
             </Typography>
 
             <Stack 
@@ -312,11 +362,12 @@ function HomePage() {
                   sx={{ 
                     flex: { xs: '1 1 100%', md: '1 1 20%' },
                     bgcolor: 'background.paper',
-                    p: { xs: 3, sm: 4 },
+                    py: { xs: 3, sm: 4 },
+                    px: 1,
                     borderRadius: 2,
                     boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
                     textAlign: 'center',
-                    height: { xs: 'auto', md: '450px' }, // Added fixed height
+                    height: { xs: 'auto', md: '350px' }, // Added fixed height
                     display: 'flex',
                     flexDirection: 'column'
                   }}
@@ -324,7 +375,7 @@ function HomePage() {
                   <Typography 
                     variant={isMobile ? 'h6' : 'h5'}
                     color="primary.700" 
-                    sx={{ mb: 2 }}
+                    sx={{ mb: 1 }}
                   >
                     {stat.label}
                   </Typography>
@@ -346,17 +397,29 @@ function HomePage() {
         <Box sx={{
           position: 'relative',
           bgcolor: 'white',
+          backgroundImage: 'url(/bg.jpg)',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          backgroundAttachment: 'fixed',
           width: '100%'
         }} id="services">
-          <Stack py={{ xs: 4, sm: 6, md: 8 }} px={{ xs: 2, sm: 4 }} alignItems="center">
+          <Stack py={{ xs: 4, sm: 6, md: 8 }} px={{ xs: 2, sm: 4 }} alignItems="center" sx={{
+            bgcolor: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(10px)'
+          }}>
             <Typography 
               component={motion.h3}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              variant={isMobile ? 'h4' : 'h3'}
+              variant={isMobile ? 'h4' : 'h3'} 
               mb={{ xs: 4, sm: 6 }}
               textAlign="center"
+              sx={{
+                color: 'white',
+                fontWeight: 700,
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+              }}
             >
               Our Services
             </Typography>
@@ -387,7 +450,7 @@ function HomePage() {
                       position: 'relative',
                       cursor: 'pointer',
                       border: '1px solid rgba(0,0,0,0.12)',
-                      bgcolor: 'background.paper',
+                      background: 'url(/background.png) no-repeat center center / cover',
                       transition: 'all 0.3s ease',
                       '&:hover': {
                         boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
@@ -415,6 +478,7 @@ function HomePage() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'contain',
+                          mixBlendMode: 'multiply'
                         }}
                       />
                     </Box>
@@ -423,12 +487,13 @@ function HomePage() {
                         variant="h5" 
                         sx={{ 
                           color: 'text.primary',
-                          fontWeight: 500
+                          fontWeight: 500,
+                          fontSize: { xs: '1.1rem', sm: '1.5rem' }
                         }}
                       >
                         {service.title}
                       </Typography>
-                      <Typography 
+                      {!isMobile && <Typography 
                         variant="body2" 
                         color="text.secondary"
                         sx={{
@@ -439,7 +504,7 @@ function HomePage() {
                         }}
                       >
                         {service.description}
-                      </Typography>
+                      </Typography>}
                     </Stack>
                   </Stack>
                 ))}
@@ -689,17 +754,25 @@ function HomePage() {
                 <Button 
                   component={motion.button}
                   type="submit"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: isLoading ? 1 : 1.05 }}
+                  whileTap={{ scale: isLoading ? 1 : 0.95 }}
                   variant="contained" 
                   size={isMobile ? 'medium' : 'large'}
+                  disabled={isLoading}
                   sx={{ 
                     py: { xs: 1.5, sm: 2 },
                     fontSize: { xs: '1rem', sm: '1.1rem' },
                     textTransform: 'none'
                   }}
                 >
-                  Send Message
+                  {isLoading ? (
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <CircularProgress size={20} color="inherit" />
+                      <span>Sending...</span>
+                    </Stack>
+                  ) : (
+                    'Send Message'
+                  )}
                 </Button>
               </Stack>
             </Stack>
@@ -770,7 +843,7 @@ function ServicePage() {
       <Stack minHeight="100vh">
         <Navbar />
         <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Typography variant="h1" sx={{ mb: 3 }}>{service.title}</Typography>
+          <Typography variant="h1" sx={{ mb: 3, fontSize: { xs: '2.5rem', sm: '3.5rem' } }}>{service.title}</Typography>
           <Box
             component="img"
             src={service.banner}
