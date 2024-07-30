@@ -209,7 +209,7 @@ function HomePage() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
-          height={{ xs: 800, sm: 600, md: 800 }}
+          height={{ xs: 1000, sm: 600, md: 800 }}
           width='100%'
           component={motion.div}
           initial={{ opacity: 0 }}
@@ -353,8 +353,24 @@ function HomePage() {
                 mb: 8
               }}
             >
-              Why Choose Us?
+             Breathe Easy, Know Your Home is in Good Hands
             </Typography>
+            <Typography 
+              component={motion.p}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              variant="body1" 
+              sx={{ 
+                mb: 4, 
+                textAlign: 'center',
+                px: { xs: 2, sm: 4 }
+              }}
+            >
+              Alpha Duct Cleaning is your one-stop shop for all your air duct cleaning needs. We understand that your home is your sanctuary, and we take your air quality seriously. Our team of experienced technicians will clean your air ducts thoroughly and efficiently, leaving you with peace of mind knowing that your home is in good hands.
+            </Typography>
+
             <Grid container spacing={4}>
               {stats.map((stat) => (
                 <Grid item xs={12} md={3} key={stat.label}>
@@ -793,7 +809,8 @@ function ServicePage() {
 
   return (
     <ThemeProvider defaultMode='light' theme={theme}>
-      <Stack minHeight="100vh">
+      <Stack minHeight="100vh" sx={{
+        }}>
         <Navbar />
         
         {/* Hero Section */}
@@ -902,7 +919,7 @@ function ServicePage() {
         </Box>
 
         {/* Main Content */}
-        <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Container maxWidth="lg" sx={{ py: 8 }} >
           <Grid container spacing={6}>
             {/* Left Column - Main Content */}
             <Grid item xs={12} md={8}>
