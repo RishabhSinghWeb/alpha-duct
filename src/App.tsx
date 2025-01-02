@@ -327,8 +327,9 @@ function HomePage() {
                     boxShadow: '0 4px 14px rgba(0,0,0,0.4)',
                     width: { xs: '100%', sm: 'auto' }
                   }}
+                  startIcon={<Call />}
                 >
-                  Call Now for Free Quote
+                  Call Now: 0467 788 814
                 </Button>
               </Stack>
             </Stack>
